@@ -4,14 +4,14 @@ window_set_size(1280, 720);
 display_set_gui_size(1280, 720);
 surface_resize(application_surface, 1280, 720);
 
-var _x = display_get_gui_width() / 2;
-var _y = display_get_gui_height() - display_get_gui_height() / 16;
+text_x = display_get_gui_width() / 2;
+text_y = display_get_gui_height() - display_get_gui_height() / 16;
 var _width = display_get_gui_width() / 2;
 var _height = display_get_gui_height() / 3;
 
 global.JTT_DEBUGGING = false;
 global.JTT_DEFAULT_TYPING_CHIRP = snd_textbox_default;
-textbox = jtt_create_box_typing_gui(_x, _y, _width, _height);
+textbox = jtt_create_box_typing(_width, _height);
 textbox.set_alignments(fa_bottom, fa_center, fa_top, fa_left);
 
 choices = [];

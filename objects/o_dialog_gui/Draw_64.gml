@@ -10,3 +10,5 @@ draw_text(0, 50, "Mouse GUI: " + string(mouse[0]) + ", " + string(mouse[1]));
 
 draw_set_color(draw_options[0]);
 draw_set_alpha(draw_options[1]);
+
+textbox.draw(text_x, text_y);

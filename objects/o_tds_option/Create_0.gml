@@ -1,13 +1,11 @@
-/*
-To make life easy, we're just going to copy the Undertale style for this thing.
-We never create a button by creating this instance. We always call the creation
-function from the dialog gui script.
-*/
-text = undefined;
-label = undefined;
+/// @desc Text Dialog Scene Option
+
+text = undefined; // the text displayed by the option
+jtt_object = undefined; // the jtt object that displays the option text
 highlight = false;
 active = true; // determines if button is visible and logic executes.
 
+/// @desc Returns true if mouse is over button.
 /// @func get_mouse_hover()
 get_mouse_hover = function() {
 	if (!active) return false; // always false if inactive
@@ -21,6 +19,7 @@ get_mouse_hover = function() {
 	return (_hover_x && _hover_y);
 }
 
+/// @desc Set highlight effect of button to true or false.
 /// @func set_highlight(boolean)
 set_highlight = function(_h) {
 	// we only change the highlight if the new setting is different
@@ -37,6 +36,8 @@ set_highlight = function(_h) {
 	}
 }
 
+/// @desc Set visibility and functionality of button on or off.
+/// @func set_active(boolean)
 set_active = function(_b) {
 	active = _b;
 	label.visible = _b;
