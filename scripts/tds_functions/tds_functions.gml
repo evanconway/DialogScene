@@ -18,6 +18,7 @@ function TDS_Option(_text) constructor {
 	option_alignment_h = fa_left;
 	
 	// We're leaving alignment for options simple until further notice.
+	/// @func option_set_alignments(alignment_v, alignment_h)
 	option_set_alignments = function(alignment_v, alignment_h) {
 		option_alignment_v = alignment_v;
 		option_alignment_h = alignment_h;
@@ -66,18 +67,52 @@ function TDS_Option(_text) constructor {
 		}
 	}
 	
+	/// @func option_set_highlight_effect(text, color, alpha)
+	option_set_highlight_effect = function(_text, _color, _alpha) {
+		if (_text != undefined) option_highlight_text_effect = _text;
+		if (_color != undefined) option_highlight_color = _color;
+		if (_alpha != undefined) option_highlight_alpha = _alpha;
+	}
+	
 	/// @func option_draw(x, y)
 	option_draw = function(_x, _y) {
 		if (option_highlight) {
 			draw_set_alpha(option_highlight_alpha);
 			draw_set_color(option_highlight_color);
 			
+			var _x_start = 0;
+			var _y_start = 0;
 			var _x_end = 0;
 			var _y_end = 0;
+			// horizontal
 			if (option_alignment_h == fa_left) {
-				draw_rectangle(_x, _y, _x + option_width, _y + option_height, false);
+				_x_start = _x
+				_x_end = _x + option_width;
 			}
-			draw_rectangle(_x, _y, _x_end, _y_end, false);
+			if (option_alignment_h == fa_right) {
+				_x_start = _x - option_width;
+				_x_end = _x;
+			}
+			if (option_alignment_h == fa_center) {
+				_x_start = _x - option_width/2;
+				_x_end = _x + option_width/2;
+			}
+			
+			// vertical
+			if (option_alignment_h == fa_top) {
+				_y_start = _y
+				_y_end = _y + option_height;
+			}
+			if (option_alignment_h == fa_bottom) {
+				_y_start = _y - option_height;
+				_y_end = _y;
+			}
+			if (option_alignment_h == fa_center) {
+				_y_start = _y - option_height/2;
+				_y_end = _y + option_height/2;
+			}
+			
+			draw_rectangle(_x_start, _y_start, _x_end, _y_end, false);
 		}
 		jtt_text.draw(_x, _y);
 	}
