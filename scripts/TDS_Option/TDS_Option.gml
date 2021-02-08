@@ -8,7 +8,7 @@ function TDS_Option(_text) constructor {
 	option_width = jtt_text.textbox_width;
 	option_height = jtt_text.textbox_height;
 	option_highlight = false;
-	option_highlight_text_effect = "yellow pulse";
+	option_highlight_text_effect = "yellow pulse:1,0.2";
 	option_highlight_color = c_white;
 	option_highlight_alpha = 0.1;
 	

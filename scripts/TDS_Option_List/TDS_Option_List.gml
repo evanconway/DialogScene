@@ -1,5 +1,5 @@
 
-/// @func TDS_Option_list(*width)
+/// @func TDS_Option_List(*width)
 function TDS_Option_List() constructor {
 	option_list_width = (argument_count > 0) ? argument[0] : undefined;
 	options = [];
