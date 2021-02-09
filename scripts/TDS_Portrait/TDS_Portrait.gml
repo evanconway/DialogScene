@@ -23,7 +23,7 @@ function TDS_Portrait() constructor {
 		portrait_index = floor(_index);
 	}
 	
-	/// @func portrait_set_alignments(alignment_v, alignment_h)
+	/// @func portrait_set_alignments(vertical, horizontal)
 	portrait_set_alignments = function(_v, _h) {
 		if (_v == fa_top || _v == fa_bottom || _v == fa_center) portrait_align_v = _v;
 		else show_error("TDS error. Improper portrait alignment value.", true);

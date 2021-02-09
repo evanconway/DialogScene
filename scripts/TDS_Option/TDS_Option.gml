@@ -17,12 +17,24 @@ function TDS_Option(_text) constructor {
 	option_alignment_v = fa_top;
 	option_alignment_h = fa_left;
 	
+	option_debugging = true;
+	
 	// We're leaving alignment for options simple until further notice.
 	/// @func option_set_alignments(alignment_v, alignment_h)
 	option_set_alignments = function(alignment_v, alignment_h) {
 		option_alignment_v = alignment_v;
 		option_alignment_h = alignment_h;
 		jtt_text.set_alignments(alignment_v, alignment_h, alignment_v, alignment_h);
+	}
+	
+	/// @func option_get_width()
+	option_get_width = function() {
+		return option_width;
+	}
+	
+	/// @func option_get_height()
+	option_get_height = function() {
+		return option_height;
 	}
 	
 	/// @desc Returns true if the given point x/y are inside of option at given x/y.
@@ -76,44 +88,53 @@ function TDS_Option(_text) constructor {
 	
 	/// @func option_draw(x, y)
 	option_draw = function(_x, _y) {
+		var _x_start = 0;
+		var _y_start = 0;
+		var _x_end = 0;
+		var _y_end = 0;
+		
+		// horizontal
+		if (option_alignment_h == fa_left) {
+			_x_start = _x
+			_x_end = _x + option_width;
+		}
+		if (option_alignment_h == fa_right) {
+			_x_start = _x - option_width;
+			_x_end = _x;
+		}
+		if (option_alignment_h == fa_center) {
+			_x_start = _x - option_width/2;
+			_x_end = _x + option_width/2;
+		}
+			
+		// vertical
+		if (option_alignment_h == fa_top) {
+			_y_start = _y
+			_y_end = _y + option_height;
+		}
+		if (option_alignment_h == fa_bottom) {
+			_y_start = _y - option_height;
+			_y_end = _y;
+		}
+		if (option_alignment_h == fa_center) {
+			_y_start = _y - option_height/2;
+			_y_end = _y + option_height/2;
+		}
+		
 		if (option_highlight) {
 			draw_set_alpha(option_highlight_alpha);
 			draw_set_color(option_highlight_color);
-			
-			var _x_start = 0;
-			var _y_start = 0;
-			var _x_end = 0;
-			var _y_end = 0;
-			// horizontal
-			if (option_alignment_h == fa_left) {
-				_x_start = _x
-				_x_end = _x + option_width;
-			}
-			if (option_alignment_h == fa_right) {
-				_x_start = _x - option_width;
-				_x_end = _x;
-			}
-			if (option_alignment_h == fa_center) {
-				_x_start = _x - option_width/2;
-				_x_end = _x + option_width/2;
-			}
-			
-			// vertical
-			if (option_alignment_h == fa_top) {
-				_y_start = _y
-				_y_end = _y + option_height;
-			}
-			if (option_alignment_h == fa_bottom) {
-				_y_start = _y - option_height;
-				_y_end = _y;
-			}
-			if (option_alignment_h == fa_center) {
-				_y_start = _y - option_height/2;
-				_y_end = _y + option_height/2;
-			}
-			
 			draw_rectangle(_x_start, _y_start, _x_end, _y_end, false);
 		}
+		
 		jtt_text.draw(_x, _y);
+		
+		if (option_debugging) {
+			draw_set_color(c_grey);
+			draw_set_alpha(1);
+			draw_rectangle(_x_start, _y_start, _x_end, _y_end, true);
+			draw_set_color(c_fuchsia);
+			draw_circle(_x, _y, 2, false);
+		}
 	}
 }
