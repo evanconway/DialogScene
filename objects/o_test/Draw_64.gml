@@ -11,3 +11,7 @@ draw_text(0, 0, string(_hovered));
 test_list.option_list_highlight(_hovered);
 
 test_list.option_list_draw(300, 300);
+
+portrait.portrait_draw(200, 200);
+
+portrait.portrait_set_alignments(fa_bottom, fa_right);

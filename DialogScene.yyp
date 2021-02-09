@@ -2,9 +2,11 @@
   "resources": [
     {"id":{"name":"dialog_gui_functions","path":"scripts/dialog_gui_functions/dialog_gui_functions.yy",},"order":0,},
     {"id":{"name":"f_jtt_default","path":"fonts/f_jtt_default/f_jtt_default.yy",},"order":1,},
+    {"id":{"name":"s_character","path":"sprites/s_character/s_character.yy",},"order":0,},
     {"id":{"name":"jtt_user_functions","path":"scripts/jtt_user_functions/jtt_user_functions.yy",},"order":3,},
     {"id":{"name":"o_dialog_gui","path":"objects/o_dialog_gui/o_dialog_gui.yy",},"order":0,},
     {"id":{"name":"f_handwriting","path":"fonts/f_handwriting/f_handwriting.yy",},"order":0,},
+    {"id":{"name":"TDS_Portrait","path":"scripts/TDS_Portrait/TDS_Portrait.yy",},"order":3,},
     {"id":{"name":"text_struct_functions","path":"scripts/text_struct_functions/text_struct_functions.yy",},"order":6,},
     {"id":{"name":"TDS_Option_List","path":"scripts/TDS_Option_List/TDS_Option_List.yy",},"order":2,},
     {"id":{"name":"snd_textbox_default","path":"sounds/snd_textbox_default/snd_textbox_default.yy",},"order":4,},
@@ -13,7 +15,6 @@
     {"id":{"name":"game_tree","path":"scripts/game_tree/game_tree.yy",},"order":1,},
     {"id":{"name":"jtt_textbox","path":"scripts/jtt_textbox/jtt_textbox.yy",},"order":2,},
     {"id":{"name":"TDS_Option","path":"scripts/TDS_Option/TDS_Option.yy",},"order":1,},
-    {"id":{"name":"o_tds_option","path":"objects/o_tds_option/o_tds_option.yy",},"order":0,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
   "Options": [
