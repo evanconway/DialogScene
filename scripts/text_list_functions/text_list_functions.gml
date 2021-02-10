@@ -108,12 +108,23 @@ function text_list_add(list, text, effects, index) {
 }
 
 /// @desc Return the character in the text list at the given character index.
-function text_list_char_at(list, ichar) {
-	ichar = floor(ichar);
+function text_list_char_at(list, character_index) {
+	character_index = floor(character_index);
 	for (var i = 0; i < ds_list_size(list); i++) {
 		var struct_text = list[|i].text;
-		if (ichar > string_length(struct_text)) ichar -= string_length(struct_text);
-		else return string_char_at(struct_text, ichar);	
+		if (character_index > string_length(struct_text)) character_index -= string_length(struct_text);
+		else return string_char_at(struct_text, character_index);	
+	}
+	return undefined;
+}
+
+/// @desc Return teh struct in the text list at the given character index.
+function text_list_struct_at(list, character_index) {
+	character_index = floor(character_index);
+	for (var i = 0; i < ds_list_size(list); i++) {
+		var struct_text = list[|i].text;
+		if (character_index > string_length(struct_text)) character_index -= string_length(struct_text);
+		else return struct_text;	
 	}
 	return undefined;
 }

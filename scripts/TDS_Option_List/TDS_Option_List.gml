@@ -24,8 +24,7 @@ function TDS_Option_List() constructor {
 	option_list_add = function(_text) {
 		var _new_option = (option_list_width == undefined) ? new TDS_Option(_text) : new TDS_Option(_text, option_list_width);
 		_new_option.option_set_alignments(fa_top, fa_left); // the options themselves always have top left alignment
-		_new_option.option_jtt.set_text_align_v(option_list_text_align_v);
-		_new_option.option_jtt.set_text_align_h(option_list_text_align_h);
+		_new_option.option_set_alignments_text(option_list_text_align_v, option_list_text_align_h)
 		array_push(options, _new_option);
 	}
 	
@@ -109,6 +108,9 @@ function TDS_Option_List() constructor {
 	option_list_set_alignments_text = function(_v, _h) {
 		option_list_text_align_v = _v;
 		option_list_text_align_h = _h;
+		for (var i = 0; i < array_length(options); i++) {
+			options[i].option_set_alignments_text(_v, _h);
+		}
 	}
 	
 	/// @func option_list_get_xy_of_option(list_x, list_y, option_index)

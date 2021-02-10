@@ -1,12 +1,13 @@
 /// @desc Return tds_option struct
 /// @func TDS_Option(text, *width)
 function TDS_Option(_text) constructor {
-	var _width = (argument_count > 1) ? argument[1] : undefined;
+	option_width_init = (argument_count > 1) ? argument[1] : undefined;
 	
 	option_text = _text;
-	option_jtt = jtt_create_box(_width, undefined, _text);
+	option_jtt = jtt_create_box(option_width_init, undefined, _text);
 	option_width = option_jtt.textbox_width;
 	option_height = option_jtt.textbox_height;
+	
 	option_highlight = false;
 	option_highlight_text_effect = "yellow pulse:1,0.2";
 	option_highlight_color = c_white;
@@ -28,8 +29,8 @@ function TDS_Option(_text) constructor {
 	}
 	
 	/// @desc Set alignments of text in option box. 
-	/// @func option_set_text_alignments(vertical, horizontal)
-	option_set_text_alignments = function(_v, _h) {
+	/// @func option_set_alignments_text(vertical, horizontal)
+	option_set_alignments_text = function(_v, _h) {
 		option_jtt.set_alignments(option_alignment_v, option_alignment_h, _v, _h);
 	}
 	
@@ -73,16 +74,20 @@ function TDS_Option(_text) constructor {
 	
 	/// @func option_set_highlight(boolean)
 	option_set_highlight = function(_bool) {
+		var _text_align_v = option_jtt.alignment_text_v;
+		var _text_align_h = option_jtt.alignment_text_h;
 		if (_bool && !option_highlight) {
 			option_highlight = true;
-			option_jtt.set_text("<" + option_highlight_text_effect + ">" + option_text);
-			option_jtt.advance();
+			option_jtt = jtt_create_box(option_width_init, undefined, option_text, option_highlight_text_effect);
 		}
 		if (!_bool && option_highlight) {
 			option_highlight = false;
-			option_jtt.set_text(option_text);
-			option_jtt.advance();
+			option_jtt = jtt_create_box(option_width_init, undefined, option_text);
 		}
+		option_width = option_jtt.textbox_width;
+		option_height = option_jtt.textbox_height;
+		option_jtt.set_text_align_v(_text_align_v);
+		option_jtt.set_text_align_h(_text_align_h);
 	}
 	
 	/// @func option_set_highlight_effect(text, color, alpha)

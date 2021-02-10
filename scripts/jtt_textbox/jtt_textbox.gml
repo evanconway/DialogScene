@@ -1,8 +1,9 @@
-
-function jtt_textbox() constructor {
+/// @func JTT_TextBox(*effects)
+function JTT_TextBox() constructor {
 	text = ds_list_create(); // ds_list of ds_list of text structs (2d list)
 	text_original_string = undefined; // keep original string of set text
-	effects_default = new JTT_Text(); // effect data is stored in an unused text struct
+	
+	effects_default = (argument_count > 0) ? argument[0]: (new JTT_Text()); // effect data is stored in an unused text struct
 
 	/* Typing time is the time, in milliseconds, between each "type". Note that
 	if this value is less than the time it takes for one frame to execute, the 

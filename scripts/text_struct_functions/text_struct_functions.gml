@@ -36,7 +36,7 @@ enum TB_EFFECT_COLOR {
 function JTT_Text() constructor {
 	text = (argument_count > 0) ? argument[0] : "";
 	
-	var has_fx = (argument_count > 1) ? true : false;
+	var has_fx = (argument_count > 1) ? true : false; // effects is another text struct
 	var effects = (has_fx) ? argument[1] : undefined;
 	
 	font = (has_fx) ? effects.font : global.JTT_DEFAULT_FONT;
@@ -395,8 +395,23 @@ function jtt_text_req_ind_struct(text_struct) {
 	return false;
 }
 
+function jtt_text_copy_fx(text_struct) {
+}
+
 /// @desc Return true if effect values of given text structs are equal
 function jtt_text_fx_equal(a, b) {
+	// entry
+	if (a.effect_enter_m != b.effect_enter_m) return false;
+	if (a.effect_enter_a != b.effect_enter_a) return false;
+	if (a.fall_magnitude != b.fall_magnitude) return false;
+	if (a.fall_increment != b.fall_increment) return false;
+	if (a.rise_magnitude != b.rise_magnitude) return false;
+	if (a.rise_increment != b.rise_increment) return false;
+	if (a.fade_alpha_start != b.fade_alpha_start) return false;
+	if (a.fade_alpha_end != b.fade_alpha_end) return false;
+	if (a.fade_alpha_increment != b.fade_alpha_increment) return false;
+	
+	// normal
 	if (a.font != b.font) return false;
 	if (a.text_color != b.text_color) return false;
 	if (a.effect_m != b.effect_m) return false;

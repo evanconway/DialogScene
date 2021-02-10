@@ -58,9 +58,15 @@ global.JTT_DEFAULT_CHROMATIC_MAX = 255; // max rgb value for each color red, gre
 global.JTT_DEFAULT_CHROMATIC_MIN = 0 ; // min rgb value for each color red, green, blue
 global.JTT_DEFAULT_CHROMATIC_INCREMENT = 5; // change in rgb each update
 
-/// @func jtt_create_box(*width, *height, *text)
+/// @func jtt_create_box(*width, *height, *text, *default_effects_string)
 function jtt_create_box() {
-	var result = new jtt_textbox();
+	var _effects = undefined;
+	if (argument_count > 3 && argument[3] != undefined) {
+		var _temp = new JTT_TextBox();
+		_temp.set_text("<" + argument[3] + ">effects");
+		_effects = new JTT_Text("", _temp.text[|0][|0]);
+	}
+	var result = (_effects != undefined) ? (new JTT_TextBox(_effects)) : (new JTT_TextBox());
 	result.textbox_width = (argument_count > 0) ? argument[0] : undefined;
 	result.textbox_height = (argument_count > 1) ? argument[1] : undefined;
 	if ((argument_count > 2) && (is_string(argument[2]))) {
@@ -72,9 +78,15 @@ function jtt_create_box() {
 	return result;
 }
 
-/// @func jtt_create_box_typing(*width, *height, *text)
+/// @func jtt_create_box_typing(*width, *height, *text, *default_effects_string)
 function jtt_create_box_typing() {
-	var result = new jtt_textbox();
+	var _effects = undefined;
+	if (argument_count > 3 && argument[3] != undefined) {
+		var _temp = new JTT_TextBox();
+		_temp.set_text("<" + argument[3] + ">effects");
+		_effects = new JTT_Text("", _temp.text[|0][|0]);
+	}
+	var result = (_effects != undefined) ? (new JTT_TextBox(_effects)) : (new JTT_TextBox());
 	result.textbox_width = (argument_count > 0) ? argument[0] : undefined;
 	result.textbox_height = (argument_count > 1) ? argument[1] : undefined;
 	result.type_on_nextpage = false;
@@ -87,9 +99,15 @@ function jtt_create_box_typing() {
 	return result;
 }
 
-/// @func jtt_create_box_scrolling(width, height, *text)
+/// @func jtt_create_box_scrolling(width, height, *text, *default_effects_string)
 function jtt_create_box_scrolling(width, height) {
-	var result = new jtt_textbox();
+	var _effects = undefined;
+	if (argument_count > 3 && argument[3] != undefined) {
+		var _temp = new JTT_TextBox();
+		_temp.set_text("<" + argument[3] + ">effects");
+		_effects = new JTT_Text("", _temp.text[|0][|0]);
+	}
+	var result = (_effects != undefined) ? (new JTT_TextBox(_effects)) : (new JTT_TextBox());
 	result.textbox_width = width;
 	result.textbox_height = height;
 	result.textbox_display_mode = 1;

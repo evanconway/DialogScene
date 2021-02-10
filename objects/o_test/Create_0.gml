@@ -6,11 +6,12 @@ test_list.option_list_spacer = 40;
 test_list.option_list_set_alignments(fa_top, fa_left);
 test_list.option_list_display = 1;
 test_list.option_list_set_alignments_options(fa_center, fa_center);
-test_list.option_list_set_alignments_text(fa_top, fa_left);
 
 test_list.option_list_add("Purchase groceries.");
-test_list.option_list_add("Beat next level in Super Mario.");
+test_list.option_list_add("<red pulse>Beat<> next level in Super Mario.");
 test_list.option_list_add("Practice the difficult section of your piano sonata.");
+
+test_list.option_list_set_alignments_text(fa_top, fa_center);
 
 portrait = new TDS_Portrait(s_character);
 portrait.portrait_scale = 5;
