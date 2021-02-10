@@ -10,6 +10,12 @@ function TDS_Option_List() constructor {
 	option_list_align_v = fa_top;
 	option_list_align_h = fa_left;
 	
+	option_list_options_align_v = fa_top;
+	option_list_options_align_h = fa_left;
+	
+	option_list_text_align_v = fa_top;
+	option_list_text_align_h = fa_left;
+	
 	option_list_display = 0; // 0 for vertial, 1 for horizontal
 	
 	option_list_debugging = true;
@@ -17,7 +23,9 @@ function TDS_Option_List() constructor {
 	/// @func option_list_add(text)
 	option_list_add = function(_text) {
 		var _new_option = (option_list_width == undefined) ? new TDS_Option(_text) : new TDS_Option(_text, option_list_width);
-		_new_option.option_set_alignments(option_list_align_v, option_list_align_h);
+		_new_option.option_set_alignments(fa_top, fa_left); // the options themselves always have top left alignment
+		_new_option.option_jtt.set_text_align_v(option_list_text_align_v);
+		_new_option.option_jtt.set_text_align_h(option_list_text_align_h);
 		array_push(options, _new_option);
 	}
 	
@@ -88,74 +96,77 @@ function TDS_Option_List() constructor {
 		if (_h == fa_left || _h == fa_right || _h == fa_center) option_list_align_h = _h;
 		else show_error("TDS error. Improper option list alignment value.", true);
 		
-		// assign alignments to options
-		for (var i = 0; i < array_length(options); i++) {
-			options[i].option_set_alignments(option_list_align_v, option_list_align_h);
-		}
+		// Note that we don't change the alignment of the options themselves. They are always top/left
+	}
+	
+	/// @func option_list_set_alignments_options(vertical, horizontal)
+	option_list_set_alignments_options = function(_v, _h) {
+		option_list_options_align_v = _v;
+		option_list_options_align_h = _h;
+	}
+	
+	/// @func option_list_set_alignments_text(vertical, horizontal)
+	option_list_set_alignments_text = function(_v, _h) {
+		option_list_text_align_v = _v;
+		option_list_text_align_h = _h;
 	}
 	
 	/// @func option_list_get_xy_of_option(list_x, list_y, option_index)
 	option_list_get_xy_of_option = function(_x, _y, _index) {
+		
+		// placing function values in variables for optimization
+		var _list_width = option_list_get_width(); 
+		var _list_height = option_list_get_height();
+		
+		// assume top
+		if (option_list_align_v == fa_center) _y -= _list_height / 2;
+		if (option_list_align_v == fa_bottom) _y -= _list_height;
+		
+		// assume left
+		if (option_list_align_h == fa_center) _x -= _list_width / 2;
+		if (option_list_align_h == fa_right) _x -= _list_width;
+		
 		var _draw_y = _y;
 		var _draw_x = _x;
 		
-		/* Since the options display their own alignment correctly, all we
-		need to do for a vertical display is keep track of y drawing. */
+		/* We will always draw options with a top left alignment. The text inside
+		the options can have different alignments, and the list itself can have
+		different alignments. */
+		
 		if (option_list_display == 0) {
-			if (option_list_align_v == fa_top) {
-				for (var i = 0; i < array_length(options); i++) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_y += options[i].option_get_height();
-					_draw_y += option_list_spacer;
-				}
-			}
-			if (option_list_align_v == fa_bottom) {
-				for (var i = array_length(options) - 1; i >= 0; i--) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_y -= options[i].option_get_height();
-					_draw_y -= option_list_spacer;
-				}
-			}
-			if (option_list_align_v == fa_center) {
-				/* Center is slightly more complicated. We have to start drawing
-				half way up the height of the list, but offset by half the height
-				of the first option. */
-				_draw_y -= (option_list_get_height() / 2);
-				_draw_y += (options[0].option_get_height() / 2);
-				for (var i = 0; i < array_length(options); i++) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_y += (options[i].option_get_height() / 2);
-					_draw_y += option_list_spacer;
-					if ((i + 1) < array_length(options)) _draw_y += (options[i + 1].option_get_height() / 2);
-				}
+			for (var i = 0; i < array_length(options); i++) {
+				var _option = options[i];
+				
+				/* Recall that our options can have different widths, so we have to set
+				_draw_x to the correct position depending on its width if the alignment
+				isn't "left". */
+				_draw_x = _x;
+				if (option_list_options_align_h == fa_center) _draw_x += (_list_width - _option.option_get_width()) / 2;
+				if (option_list_options_align_h == fa_right) _draw_x += (_list_width - _option.option_get_width());
+				
+				// return values if this is the correct index
+				if (_index == i) return { x: _draw_x, y: _draw_y };
+				
+				_draw_y += _option.option_get_height();
+				_draw_y += option_list_spacer;
 			}
 		}
 		
-		/* The same principle applies for horizontal drawing, just with the x
-		position instead. */
 		if (option_list_display == 1) {
-			if (option_list_align_h == fa_left) {
-				for (var i = 0; i < array_length(options); i++) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_x += options[i].option_get_width();
-					_draw_x += option_list_spacer;
-				}
-			}
-			if (option_list_align_h == fa_right) {
-				for (var i = array_length(options) - 1; i >= 0; i--) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_x -= options[i].option_get_width();
-					_draw_x -= option_list_spacer;
-				}
-			}
-			if (option_list_align_h == fa_center) {
-				_draw_x -= (option_list_get_width() / 2);
-				_draw_x += (options[0].option_get_width() / 2);
-				for (var i = 0; i < array_length(options); i++) {
-					if (i == _index) return { x: _draw_x, y: _draw_y };
-					_draw_x += options[i].option_get_width();
-					_draw_x += option_list_spacer;
-				}
+			for (var i = 0; i < array_length(options); i++) {
+				var _option = options[i];
+				
+				/* Our options will also likely have different heights, so we have to
+				apply the same logic for horizontal display here, but for the _draw_y
+				position for all alignments that aren't "top". */
+				_draw_y = _y;
+				if (option_list_options_align_v == fa_center) _draw_y += (_list_height - _option.option_get_height()) / 2;
+				if (option_list_options_align_v == fa_bottom) _draw_y += (_list_height - _option.option_get_height());
+				
+				if (_index == i) return { x: _draw_x, y: _draw_y };
+				
+				_draw_x += _option.option_get_width();
+				_draw_x += option_list_spacer;
 			}
 		}
 		

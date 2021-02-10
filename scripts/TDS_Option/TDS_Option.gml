@@ -4,16 +4,16 @@ function TDS_Option(_text) constructor {
 	var _width = (argument_count > 1) ? argument[1] : undefined;
 	
 	option_text = _text;
-	jtt_text = jtt_create_box(_width, undefined, _text);
-	option_width = jtt_text.textbox_width;
-	option_height = jtt_text.textbox_height;
+	option_jtt = jtt_create_box(_width, undefined, _text);
+	option_width = option_jtt.textbox_width;
+	option_height = option_jtt.textbox_height;
 	option_highlight = false;
 	option_highlight_text_effect = "yellow pulse:1,0.2";
 	option_highlight_color = c_white;
 	option_highlight_alpha = 0.1;
 	
 	// default alignment for options is top left
-	jtt_text.set_alignments(fa_top, fa_left, fa_top, fa_left);
+	option_jtt.set_alignments(fa_top, fa_left, fa_top, fa_left);
 	option_alignment_v = fa_top;
 	option_alignment_h = fa_left;
 	
@@ -24,7 +24,13 @@ function TDS_Option(_text) constructor {
 	option_set_alignments = function(alignment_v, alignment_h) {
 		option_alignment_v = alignment_v;
 		option_alignment_h = alignment_h;
-		jtt_text.set_alignments(alignment_v, alignment_h, alignment_v, alignment_h);
+		option_jtt.set_alignments(alignment_v, alignment_h, alignment_v, alignment_h);
+	}
+	
+	/// @desc Set alignments of text in option box. 
+	/// @func option_set_text_alignments(vertical, horizontal)
+	option_set_text_alignments = function(_v, _h) {
+		option_jtt.set_alignments(option_alignment_v, option_alignment_h, _v, _h);
 	}
 	
 	/// @func option_get_width()
@@ -41,24 +47,24 @@ function TDS_Option(_text) constructor {
 	/// @func option_point_on(option_x, option_y, point_x, point_y)
 	option_point_on = function(option_x, option_y, point_x, point_y) {
 		var x_on = false;
-		if (jtt_text.alignment_box_h == fa_left) {
+		if (option_jtt.alignment_box_h == fa_left) {
 			if (point_x >= option_x && point_x <= option_x + option_width) x_on = true;
 		}
-		if (jtt_text.alignment_box_h == fa_right) {
+		if (option_jtt.alignment_box_h == fa_right) {
 			if (point_x <= option_x && point_x >= option_x - option_width) x_on = true;
 		}
-		if (jtt_text.alignment_box_h == fa_center) {
+		if (option_jtt.alignment_box_h == fa_center) {
 			if (point_x >= option_x - option_width/2 && point_x <= option_x + option_width/2) x_on = true;
 		}
 		
 		var y_on = false;
-		if (jtt_text.alignment_box_v = fa_top) {
+		if (option_jtt.alignment_box_v = fa_top) {
 			if (point_y >= option_y && point_y <= option_y + option_height) y_on = true;
 		}
-		if (jtt_text.alignment_box_v == fa_bottom) {
+		if (option_jtt.alignment_box_v == fa_bottom) {
 			if (point_y <= option_y && point_y >= option_y - option_height) y_on = true;
 		}
-		if (jtt_text.alignment_box_v == fa_center) {
+		if (option_jtt.alignment_box_v == fa_center) {
 			if (point_y >= option_y - option_height/2 && point_y <= option_y + option_height/2) y_on = true;
 		}
 		
@@ -69,13 +75,13 @@ function TDS_Option(_text) constructor {
 	option_set_highlight = function(_bool) {
 		if (_bool && !option_highlight) {
 			option_highlight = true;
-			jtt_text.set_text("<" + option_highlight_text_effect + ">" + option_text);
-			jtt_text.advance();
+			option_jtt.set_text("<" + option_highlight_text_effect + ">" + option_text);
+			option_jtt.advance();
 		}
 		if (!_bool && option_highlight) {
 			option_highlight = false;
-			jtt_text.set_text(option_text);
-			jtt_text.advance();
+			option_jtt.set_text(option_text);
+			option_jtt.advance();
 		}
 	}
 	
@@ -127,7 +133,7 @@ function TDS_Option(_text) constructor {
 			draw_rectangle(_x_start, _y_start, _x_end, _y_end, false);
 		}
 		
-		jtt_text.draw(_x, _y);
+		option_jtt.draw(_x, _y);
 		
 		if (option_debugging) {
 			draw_set_color(c_grey);
