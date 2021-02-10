@@ -60,6 +60,11 @@ function JTT_Text() constructor {
 	effect_enter_a = (has_fx) ? effects.effect_enter_a : global.JTT_DEFAULT_EFFECT_ENTER_ALPHA;
 	alpha = 1;
 	
+	// NOT YET IMPLEMENTED, chirps are currently stored in the textbox, not the text struct
+	// we're very close to changing this though...
+	chirp = global.JTT_DEFAULT_TYPING_CHIRP;
+	chirp_gain = global.JTT_DEFAULT_TYPING_CHIRP_GAIN;
+	
 	// other modifier values for entry effects
 	draw_mod_entry_x = 0;
 	draw_mod_entry_y = 0;

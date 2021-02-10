@@ -19,9 +19,7 @@ function JTT_TextBox() constructor {
 	true. */
 	type_on_nextpage = true; 
 
-	chirp = global.JTT_DEFAULT_TYPING_CHIRP;
 	chirp_id = undefined;
-	chirp_gain = global.JTT_DEFAULT_TYPING_CHIRP_GAIN;
 	textbox_width = undefined;
 	textbox_height = undefined;
 	alignment_text_h = global.JTT_DEFAULT_ALIGN_TEXT_H;
@@ -911,17 +909,6 @@ function JTT_TextBox() constructor {
 			// run update logic until caught up
 			if (typing_time <= 0) {
 				typing_time += typing_time_default;
-			
-				/* Play typing chirp sound. Notice that we check if typing_time
-				is greater than 0 before running. We only update the audio if
-				typing_time has caught up. */
-				if ((chirp != undefined) && (typing_time > 0)) {
-					if (chirp_id != undefined) audio_sound_gain(chirp_id, 0, 30);
-					//if (chirp_id != undefined) audio_stop_sound(chirp_id);
-					chirp_id = audio_play_sound(chirp, 1, false);
-					var chirp_gain_default = audio_sound_get_gain(chirp);
-					audio_sound_gain(chirp_id, chirp_gain * chirp_gain_default, 0);
-				}
 
 				/* This loop increases the cursor by typing increment, but stops if it
 				encounters punctuation. It also ensures the cursor wraps when reaching
@@ -969,6 +956,20 @@ function JTT_TextBox() constructor {
 						typing_time += typing_time_pause;
 					}
 				}
+				
+				
+				/* Play typing chirp sound. Notice that we check if typing_time
+				is greater than 0 before running. We only update the audio if
+				typing_time has caught up. */
+				var _chirp = text_list_struct_at(text[|cursor_row], cursor).chirp;
+				var _chirp_gain = text_list_struct_at(text[|cursor_row], cursor).chirp_gain;
+				if ((_chirp != undefined) && (typing_time > 0)) {
+					if (chirp_id != undefined) audio_sound_gain(chirp_id, 0, 30);
+					chirp_id = audio_play_sound(_chirp, 1, false);
+					var chirp_gain_default = audio_sound_get_gain(_chirp);
+					audio_sound_gain(chirp_id, _chirp_gain * chirp_gain_default, 0);
+				}
+				
 			}
 		
 			typing_time -= 1; // typing_time counts down updates

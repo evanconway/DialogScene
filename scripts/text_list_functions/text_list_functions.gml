@@ -124,7 +124,7 @@ function text_list_struct_at(list, character_index) {
 	for (var i = 0; i < ds_list_size(list); i++) {
 		var struct_text = list[|i].text;
 		if (character_index > string_length(struct_text)) character_index -= string_length(struct_text);
-		else return struct_text;	
+		else return list[|i];
 	}
 	return undefined;
 }

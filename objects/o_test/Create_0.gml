@@ -17,3 +17,5 @@ portrait = new TDS_Portrait(s_character);
 portrait.portrait_scale = 5;
 portrait.portrait_set_index(2);
 portrait.portrait_set_alignments(fa_bottom, fa_right);
+
+chirping = jtt_create_box_typing(300, 300, "I'm just here to test out some typing effects.", "fall");

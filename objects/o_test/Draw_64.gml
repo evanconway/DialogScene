@@ -14,3 +14,5 @@ test_list.option_list_highlight(_hovered);
 test_list.option_list_draw(_draw.x, _draw.y);
 
 portrait.portrait_draw(200, 200);
+
+chirping.draw(700, 0);
