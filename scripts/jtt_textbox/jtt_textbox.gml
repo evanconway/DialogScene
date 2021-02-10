@@ -5,9 +5,7 @@ function JTT_TextBox() constructor {
 	
 	effects_default = (argument_count > 0) ? argument[0]: (new JTT_Text()); // effect data is stored in an unused text struct
 
-	/* Typing time is the time, in milliseconds, between each "type". Note that
-	if this value is less than the time it takes for one frame to execute, the 
-	game will "type" once each frame. */
+	/* Typing time is the number of updates between each "type". */
 	typing_time_default = global.JTT_DEFAULT_TYPING_TIME;
 	typing_time_stop = global.JTT_DEFAULT_TYPING_TIME_STOP;
 	typing_time_pause = global.JTT_DEFAULT_TYPING_TIME_PAUSE;
