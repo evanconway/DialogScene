@@ -60,10 +60,8 @@ function JTT_Text() constructor {
 	effect_enter_a = (has_fx) ? effects.effect_enter_a : global.JTT_DEFAULT_EFFECT_ENTER_ALPHA;
 	alpha = 1;
 	
-	// NOT YET IMPLEMENTED, chirps are currently stored in the textbox, not the text struct
-	// we're very close to changing this though...
-	chirp = global.JTT_DEFAULT_TYPING_CHIRP;
-	chirp_gain = global.JTT_DEFAULT_TYPING_CHIRP_GAIN;
+	chirp = (has_fx) ? effects.chirp : global.JTT_DEFAULT_TYPING_CHIRP;
+	chirp_gain = (has_fx) ? effects.chirp_gain : global.JTT_DEFAULT_TYPING_CHIRP_GAIN;
 	
 	// other modifier values for entry effects
 	draw_mod_entry_x = 0;
@@ -400,9 +398,6 @@ function jtt_text_req_ind_struct(text_struct) {
 	return false;
 }
 
-function jtt_text_copy_fx(text_struct) {
-}
-
 /// @desc Return true if effect values of given text structs are equal
 function jtt_text_fx_equal(a, b) {
 	// entry
@@ -417,6 +412,8 @@ function jtt_text_fx_equal(a, b) {
 	if (a.fade_alpha_increment != b.fade_alpha_increment) return false;
 	
 	// normal
+	if (a.chirp != b.chirp) return false;
+	if (a.chirp_gain != b.chirp_gain) return false;
 	if (a.font != b.font) return false;
 	if (a.text_color != b.text_color) return false;
 	if (a.effect_m != b.effect_m) return false;

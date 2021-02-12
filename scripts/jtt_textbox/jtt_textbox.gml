@@ -17,7 +17,7 @@ function JTT_TextBox() constructor {
 	true. */
 	type_on_nextpage = true; 
 
-	chirp_id = undefined;
+	chirp_id = undefined; // used to store the exact chirp object played by the textbox
 	textbox_width = undefined;
 	textbox_height = undefined;
 	alignment_text_h = global.JTT_DEFAULT_ALIGN_TEXT_H;
@@ -156,6 +156,7 @@ function JTT_TextBox() constructor {
 								_sprite_struct.sprite_scale = real(_args[1]);
 							} catch (err) {
 								show_error("JTT error. Sprite cannot have non-numerical scale value.", true);
+								show_debug_message(err);
 							}
 						}
 						
@@ -182,7 +183,7 @@ function JTT_TextBox() constructor {
 				var parse_end_i = htmlsafe_string_pos_ext("<", text_string, index);
 				
 				// For debugging purposes, we'll fill this variable with the parsable text
-				var parsable_text = string_copy(text_string, index, parse_end_i - index);
+				//var parsable_text = string_copy(text_string, index, parse_end_i - index);
 				
 				// We subract 1 from the found value because we want our indices to be inclusive.
 				parse_end_i -= 1;
@@ -581,8 +582,26 @@ function JTT_TextBox() constructor {
 				}
 			}
 			
+			// chirp
+			if (_command == "chirp") {
+				if (_args[0] == "none" || _args[0] == "undefined") {
+					new_effects.chirp = undefined;
+				} else if (_args[0] != "nc") {
+					new_effects.chirp = asset_get_index(_args[0]);
+				}
+				
+				if (array_length(_args) > 1) {
+					try {
+						new_effects.chirp_gain = real(_args[1]);
+					} catch (err) {
+						show_debug_message(err);
+						show_error("JTT Error: Chirp Gain param (" + string(_args[1] + ") is not a real number!"), true);
+					}
+				}
+			}
+			
 			// For the following commands, args will be converted to real numbers if appropriate. 
-			if (_command != "sprite") _args = args_convert_to_reals(_args);
+			if (_command != "sprite" && _command != "chirp") _args = args_convert_to_reals(_args);
 			
 			// ENTRY EFFECTS
 			// movement effects

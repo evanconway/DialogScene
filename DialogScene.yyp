@@ -10,6 +10,7 @@
     {"id":{"name":"text_struct_functions","path":"scripts/text_struct_functions/text_struct_functions.yy",},"order":6,},
     {"id":{"name":"TDS_Option_List","path":"scripts/TDS_Option_List/TDS_Option_List.yy",},"order":2,},
     {"id":{"name":"snd_textbox_default","path":"sounds/snd_textbox_default/snd_textbox_default.yy",},"order":4,},
+    {"id":{"name":"snd_chirp2","path":"sounds/snd_chirp2/snd_chirp2.yy",},"order":0,},
     {"id":{"name":"text_list_functions","path":"scripts/text_list_functions/text_list_functions.yy",},"order":5,},
     {"id":{"name":"o_test","path":"objects/o_test/o_test.yy",},"order":1,},
     {"id":{"name":"game_tree","path":"scripts/game_tree/game_tree.yy",},"order":1,},
