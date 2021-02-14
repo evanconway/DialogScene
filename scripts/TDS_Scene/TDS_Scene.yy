@@ -6,7 +6,7 @@
     "path": "folders/Text Dialog Scene.yy",
   },
   "resourceVersion": "1.0",
-  "name": "game_tree",
+  "name": "TDS_Scene",
   "tags": [],
   "resourceType": "GMScript",
 }

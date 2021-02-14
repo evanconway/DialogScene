@@ -5,9 +5,9 @@ anything that uses the same structure. After creating a game tree, the tree can 
 populated with a specific style of programming.
 */
 
-function game_tree() constructor{
+function Game_Tree() constructor{
 	/*
-	Each element in the tree is an array containing:
+	Each element in the tree is a struct containing:
 	[branch, branch_depth, data, targets]
 	*/
 	tree = [];

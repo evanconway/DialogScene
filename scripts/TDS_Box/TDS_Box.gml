@@ -38,7 +38,9 @@ function TDS_Box(width, height) constructor {
 	/// @func tds_box_set_data(text, *portrait_index, *portrait, *default_effects, *options)
 	tds_box_set_data = function(_text) {
 		
-		tds_box_portrait_index = (argument_count > 1) ? argument[1] : 0;
+		// we only change the portrait index if the given value is defined
+		if (argument_count > 1 && argument[1] != undefined) tds_box_portrait_index = argument[1];
+		
 		tds_box_portrait = (argument_count > 2) ? argument[2] : tds_box_portrait;
 		var _effects = (argument_count > 3) ? argument[3] : undefined;
 		

@@ -24,7 +24,7 @@ mouse_prev = mouse;
 mouse_using = false;
 mouse_using_prev = false;
 
-dialog_tree = new game_tree();
+dialog_tree = new Game_Tree();
 
 // this function MUST be called after populating the tree to setup the dialog correctly
 /// @desc Populate gui with data from current tree state
