@@ -32,3 +32,7 @@ if (keyboard_check_pressed(ord("5"))) {
 if (keyboard_check_pressed(ord("6"))) {
 	box.tds_box_set_data("It's a monster.", 2, s_character2, "chirp:snd_chirp2");
 }
+
+var mouse = { x: device_mouse_x_to_gui(0), y: device_mouse_y_to_gui(0) };
+
+box.tds_box_option_highlight(box.tds_box_get_option_at_xy(100, 100, mouse.x, mouse.y));

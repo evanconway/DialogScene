@@ -38,9 +38,9 @@ function TDS_Option_List() constructor {
 		}
 	}
 	
-	/// @desc Return index of option at given xy. -1 if non at point.
-	/// @func option_list_get_option_xy(list_x, list_y, point_x, point_y)
-	option_list_get_option_xy = function(_x, _y, _point_x, _point_y) {
+	/// @desc Return index of option at given xy. -1 if none at point.
+	/// @func option_list_get_option_at_xy(list_x, list_y, point_x, point_y)
+	option_list_get_option_at_xy = function(_x, _y, _point_x, _point_y) {
 		for (var i = 0; i < array_length(options); i++) {
 			var _check = option_list_get_xy_of_option(_x, _y, i);
 			if (options[i].option_point_on(_check.x, _check.y, _point_x, _point_y)) {

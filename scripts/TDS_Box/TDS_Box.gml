@@ -84,6 +84,26 @@ function TDS_Box(width, height) constructor {
 		return tds_box_get_portrait_scale() * sprite_get_height(tds_box_portrait);
 	}
 	
+	/// @func tds_box_option_highlight
+	tds_box_option_highlight = function(_index) {
+		if (tds_box_options != undefined) {
+			tds_box_options.option_list_highlight(_index);
+		}
+	}
+	
+	/// @func tds_box_get_option_at_xy(box_x, box_y, x, y)
+	tds_box_get_option_at_xy = function(_box_x, _box_y, _x, _y) {
+		if (tds_box_options == undefined) return -1;
+		
+		// recall that the options list is offset by the portrait and text
+		_box_x += (tds_box_border_width + tds_box_padding);
+		if (tds_box_portrait != undefined) _box_x += (tds_box_get_portrait_width() + tds_box_padding);
+		_box_y += (tds_box_border_width + tds_box_padding);
+		if (tds_box_jtt != undefined) _box_y += (tds_box_jtt.textbox_height + tds_box_padding);
+		
+		return tds_box_options.option_list_get_option_at_xy(_box_x, _box_y, _x, _y);
+	}
+	
 	/// @func tds_box_draw(x, y, *alpha)
 	tds_box_draw = function(_x, _y) {
 		var _alpha = (argument_count > 0) ? argument[0] : 1;
