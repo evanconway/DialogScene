@@ -1027,7 +1027,11 @@ function JTT_TextBox() constructor {
 	}
 
 	/// @desc Draw the textbox.
+	/// @func draw(x, y, *alpha)
 	draw = function(x, y) {
+		
+		var _alpha_mod = (argument_count > 2) ? argument[2] : 1;
+		
 		if (global.JTT_AUTO_UPDATE) update();
 		
 		var original_color = draw_get_color();
@@ -1110,6 +1114,9 @@ function JTT_TextBox() constructor {
 							alpha_scroll_mod = (box_bottom - (_y + row_height)) / scroll_fade_bound;
 						}
 					}
+					
+					/* The alpha passed in at the start of the function modifies our end alpha. */
+					alpha_scroll_mod *= _alpha_mod;
 			
 					// if we are not on the cursor row, we can just draw the text
 					if (irow < cursor_row) {

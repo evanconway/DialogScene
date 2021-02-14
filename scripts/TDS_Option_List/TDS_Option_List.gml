@@ -180,11 +180,14 @@ function TDS_Option_List() constructor {
 		return undefined;
 	}
 	
-	/// @func option_list_draw(x, y)
+	/// @func option_list_draw(x, y, *alpha)
 	option_list_draw = function(_x, _y) {
+		
+		var _alpha = (argument_count > 2) ? argument[2] : 1;
+		
 		for (var i = 0; i < array_length(options); i++) {
 			var _draw = option_list_get_xy_of_option(_x, _y, i);
-			options[i].option_draw(_draw.x, _draw.y);
+			options[i].option_draw(_draw.x, _draw.y, _alpha);
 		}
 		
 		// debugging

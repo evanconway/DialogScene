@@ -97,8 +97,11 @@ function TDS_Option(_text) constructor {
 		if (_alpha != undefined) option_highlight_alpha = _alpha;
 	}
 	
-	/// @func option_draw(x, y)
+	/// @func option_draw(x, y, *alpha)
 	option_draw = function(_x, _y) {
+		
+		var _alpha = (argument_count > 2) ? argument[2] : 1;
+		
 		var _x_start = 0;
 		var _y_start = 0;
 		var _x_end = 0;
@@ -133,12 +136,12 @@ function TDS_Option(_text) constructor {
 		}
 		
 		if (option_highlight) {
-			draw_set_alpha(option_highlight_alpha);
+			draw_set_alpha(option_highlight_alpha * _alpha);
 			draw_set_color(option_highlight_color);
 			draw_rectangle(_x_start, _y_start, _x_end, _y_end, false);
 		}
 		
-		option_jtt.draw(_x, _y);
+		option_jtt.draw(_x, _y, _alpha);
 		
 		if (option_debugging) {
 			draw_set_color(c_grey);

@@ -154,7 +154,7 @@ function TDS_Box(width, height) constructor {
 	
 	/// @func tds_box_draw(x, y, *alpha)
 	tds_box_draw = function(_x, _y) {
-		var _alpha = (argument_count > 0) ? argument[0] : 1;
+		var _alpha = (argument_count > 2) ? argument[2] : 1;
 		
 		// assume left aligned
 		if (tds_box_alignment_h == fa_center) _x -= floor(tds_box_width / 2);
@@ -196,7 +196,7 @@ function TDS_Box(width, height) constructor {
 		_x += (tds_box_get_portrait_width() + tds_box_padding);
 		
 		if (tds_box_jtt != undefined) {
-			tds_box_jtt.draw(_x, _y);
+			tds_box_jtt.draw(_x, _y, _alpha);
 		}
 		
 		// text drawn, adjust x/y
@@ -205,10 +205,10 @@ function TDS_Box(width, height) constructor {
 			_y += tds_box_padding;
 		}
 		
-		if (tds_box_options != undefined && tds_box_jtt != undefined && tds_box_jtt.get_typing_all_finished()) {
-			tds_box_options.option_list_draw(_x, _y);
-		}
-		
 		tds_box_option_set_highlight(tds_box_option_highlighted);
+		
+		if (tds_box_options != undefined && tds_box_jtt != undefined && tds_box_jtt.get_typing_all_finished()) {
+			tds_box_options.option_list_draw(_x, _y, _alpha);
+		}
 	}
 }
