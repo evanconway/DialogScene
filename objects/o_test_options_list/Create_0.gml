@@ -18,4 +18,20 @@ portrait.portrait_scale = 5;
 portrait.portrait_set_index(2);
 portrait.portrait_set_alignments(fa_bottom, fa_right);
 
-chirping = jtt_create_box_typing(300, 300, "<chirp:snd_chirp2>I'm just here to test out some typing effects.", "rise fade");
+
+colors = jtt_create_box(400, 500, 
+	"With <red>color<> tags, <green>text<> can <ltblue>be<> any <yellow>color<>." +
+	"It can even be <252,15,192>an rgb code<>. But by far the coolest color is " +
+	"<chromatic>chromatic<>!"
+	);
+
+combined = jtt_create_box_typing(400, 500,
+	"There are also <float>moving<> and <pulse:0.5,0.1>alpha<> effects, which can be " +
+	"<shake yellow blink:1,0.2>combined<> with colors. And all these effects can "+
+	"be <chromatic wave>typed out!<>"
+	);
+
+typing = jtt_create_box_typing(400, 500,
+	"These <wave pink>effects<> can even be <wshake>typed<> with special " +
+	"<green float>typing effects<> that change how the text <chromatic wave>types out<>."
+	, "fade fall");
