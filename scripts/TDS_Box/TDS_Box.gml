@@ -23,6 +23,7 @@ function TDS_Box(width, height) constructor {
 	
 	tds_box_jtt = undefined; // this is defined in set_data
 	tds_box_options = undefined; // this is defined in set_data
+	tds_box_option_highlighted = 0; // index of option highlighted
 	
 	/* By default, portraits will be their natural width and height. But we
 	can force them to be a different width and height. If the width is larger
@@ -84,13 +85,6 @@ function TDS_Box(width, height) constructor {
 		return tds_box_get_portrait_scale() * sprite_get_height(tds_box_portrait);
 	}
 	
-	/// @func tds_box_option_highlight
-	tds_box_option_highlight = function(_index) {
-		if (tds_box_options != undefined) {
-			tds_box_options.option_list_highlight(_index);
-		}
-	}
-	
 	/// @func tds_box_get_option_at_xy(box_x, box_y, x, y)
 	tds_box_get_option_at_xy = function(_box_x, _box_y, _x, _y) {
 		if (tds_box_options == undefined) return -1;
@@ -102,6 +96,47 @@ function TDS_Box(width, height) constructor {
 		if (tds_box_jtt != undefined) _box_y += (tds_box_jtt.textbox_height + tds_box_padding);
 		
 		return tds_box_options.option_list_get_option_at_xy(_box_x, _box_y, _x, _y);
+	}
+	
+	/* The user should rarely need to call this. The highlight should almost always be set with the
+	other functions. This is mainly for use in the draw method. */
+	/// @func tds_box_option_set_highlight(index)
+	tds_box_option_set_highlight = function(_index) {
+		if (tds_box_options != undefined) {
+			tds_box_options.option_list_set_highlight(_index);
+			tds_box_option_highlighted = _index;
+		}
+	}
+	
+	/// @func tds_box_option_set_highlight_at_xy(box_x, box_y, x, y)
+	tds_box_option_set_highlight_at_xy = function(_box_x, _box_y, _x, _y) {
+		tds_box_option_highlighted = tds_box_get_option_at_xy(_box_x, _box_y, _x, _y);
+	}
+	
+	/// @func tds_box_option_set_highlight_next()
+	tds_box_option_set_highlight_next = function() {
+		if (tds_box_options == undefined) return;
+		if (tds_box_option_highlighted < 0 || tds_box_option_highlighted >= tds_box_options.option_list_get_number()) {
+			tds_box_option_highlighted = 0;
+		} else {
+			tds_box_option_highlighted += 1;
+			if (tds_box_option_highlighted >= tds_box_options.option_list_get_number()) {
+				tds_box_option_highlighted = tds_box_options.option_list_get_number() - 1;
+			}
+		}
+	}
+	
+	/// @func tds_box_option_set_highlight_prev()
+	tds_box_option_set_highlight_prev = function() {
+		if (tds_box_options == undefined) return;
+		if (tds_box_option_highlighted < 0 || tds_box_option_highlighted >= tds_box_options.option_list_get_number()) {
+			tds_box_option_highlighted = 0;
+		} else {
+			tds_box_option_highlighted -= 1;
+			if (tds_box_option_highlighted < 0) {
+				tds_box_option_highlighted = 0;
+			}
+		}
 	}
 	
 	/// @func tds_box_draw(x, y, *alpha)
@@ -155,5 +190,7 @@ function TDS_Box(width, height) constructor {
 		if (tds_box_options != undefined && tds_box_jtt != undefined && tds_box_jtt.get_typing_all_finished()) {
 			tds_box_options.option_list_draw(_x, _y);
 		}
+		
+		tds_box_option_set_highlight(tds_box_option_highlighted);
 	}
 }

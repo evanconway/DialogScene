@@ -572,14 +572,16 @@ function JTT_TextBox() constructor {
 			if (new_color != undefined) new_effects.text_color = new_color;
 			
 			// first parse commands that use string arguments:
+			var _string_used = false;
 			
 			// font
-			if (_command == "f") {
+			if (_command == "f" || _command == "font") {
 				// attemp to set new font
 				var new_font = asset_get_index(_args[0]);
 				if ((new_font >= 0) && (asset_get_type(_args[0]) == asset_font)) {
 					new_effects.font = new_font;
 				}
+				_string_used = true;
 			}
 			
 			// chirp
@@ -598,10 +600,16 @@ function JTT_TextBox() constructor {
 						show_error("JTT Error: Chirp Gain param (" + string(_args[1] + ") is not a real number!"), true);
 					}
 				}
+				_string_used = true;
+			}
+			
+			// sprite, only need mark flag true here, leg work done in creating text list
+			if (_command == "sprite") {
+				_string_used = true;
 			}
 			
 			// For the following commands, args will be converted to real numbers if appropriate. 
-			if (_command != "sprite" && _command != "chirp") _args = args_convert_to_reals(_args);
+			if (!_string_used) _args = args_convert_to_reals(_args);
 			
 			// ENTRY EFFECTS
 			// movement effects

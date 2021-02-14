@@ -28,10 +28,15 @@ function TDS_Option_List() constructor {
 		array_push(options, _new_option);
 	}
 	
+	/// @func option_list_get_number()
+	option_list_get_number = function() {
+		return array_length(options);
+	}
+	
 	/* This function sets the highlight on the given option index, and off for all others. 
 	Therefore, an index not included in options, like -1, will turn all highlights off. */
-	/// @func option_list_highlight(option_index)
-	option_list_highlight = function(_index) {
+	/// @func option_list_set_highlight(option_index)
+	option_list_set_highlight = function(_index) {
 		for (var i = 0; i < array_length(options); i++) {
 			if (i == _index) options[i].option_set_highlight(true);
 			else options[i].option_set_highlight(false);

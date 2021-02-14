@@ -9,7 +9,7 @@ var _hovered = test_list.option_list_get_option_at_xy(_draw.x, _draw.y, mouse[0]
 //draw_set_alpha(1);
 //draw_text(0, 0, string(_hovered));
 
-test_list.option_list_highlight(_hovered);
+test_list.option_list_set_highlight(_hovered);
 
 //test_list.option_list_draw(_draw.x, _draw.y);
 
