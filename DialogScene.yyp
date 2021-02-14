@@ -1,6 +1,5 @@
 {
   "resources": [
-    {"id":{"name":"dialog_gui_functions","path":"scripts/dialog_gui_functions/dialog_gui_functions.yy",},"order":0,},
     {"id":{"name":"f_jtt_default","path":"fonts/f_jtt_default/f_jtt_default.yy",},"order":1,},
     {"id":{"name":"s_character","path":"sprites/s_character/s_character.yy",},"order":0,},
     {"id":{"name":"jtt_user_functions","path":"scripts/jtt_user_functions/jtt_user_functions.yy",},"order":3,},

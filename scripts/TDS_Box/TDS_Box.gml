@@ -13,8 +13,6 @@ function TDS_Box(width, height) constructor {
 	tds_box_portrait = undefined; // sprite of character portrait
 	tds_box_portrait_index = 0; // index of character sprite
 	
-	tds_box_effects_default = undefined;
-	
 	tds_box_padding = ceil(tds_box_width / 50); // distance from edge of box all elements will be
 	
 	tds_box_color = c_dkgray;
@@ -34,6 +32,9 @@ function TDS_Box(width, height) constructor {
 	
 	tds_box_portrait_scaletomax = true; // if true, portraits are scaled to maximum possible values
 	
+	
+	/* Changing portrait index without changing portrait will leave the current portrait as is. Undefined must be
+	manually passed into the portrait parameter to remove the portrait. */
 	/// @func tds_box_set_data(text, *portrait_index, *portrait, *default_effects, *options)
 	tds_box_set_data = function(_text) {
 		
@@ -43,7 +44,6 @@ function TDS_Box(width, height) constructor {
 		
 		var _pwidth = tds_box_get_portrait_width() + tds_box_padding;
 		var _textwidth = tds_box_width - _pwidth - tds_box_border_width * 2 - tds_box_padding * 2;
-		var _textheight = tds_box_height - tds_box_border_width * 2 - tds_box_padding * 2;
 		
 		tds_box_text = _text;
 		if (_text != undefined) tds_box_jtt = jtt_create_box_typing(_textwidth, undefined, _text, _effects);
@@ -59,11 +59,15 @@ function TDS_Box(width, height) constructor {
 		}
 	}
 	
+	/// @func tds_box_set_alignments(vertical, horizontal)
+	tds_box_set_alignments = function(_v, _h) {
+		tds_box_alignment_v = _v;
+		tds_box_alignment_h = _h;
+	}
+	
 	/// @func tds_box_get_portrait_scale()
 	tds_box_get_portrait_scale = function() {
 		if (tds_box_portrait == undefined) return 0;
-		var _width = tds_box_width - tds_box_padding * 2 - tds_box_border_width * 2;
-		var _height = tds_box_height - tds_box_padding * 2 - tds_box_border_width * 2;
 		var _pwidth = sprite_get_width(tds_box_portrait);
 		var _pheight = sprite_get_height(tds_box_portrait);
 		var _pscale = tds_box_portrait_scaletomax ? tds_box_portrait_max_width / _pwidth : 1;
@@ -94,6 +98,15 @@ function TDS_Box(width, height) constructor {
 		if (tds_box_portrait != undefined) _box_x += (tds_box_get_portrait_width() + tds_box_padding);
 		_box_y += (tds_box_border_width + tds_box_padding);
 		if (tds_box_jtt != undefined) _box_y += (tds_box_jtt.textbox_height + tds_box_padding);
+		
+		// modify for alignments
+		// assume left aligned
+		if (tds_box_alignment_h == fa_center) _box_x -= floor(tds_box_width / 2);
+		if (tds_box_alignment_h == fa_right) _box_x -= tds_box_width;
+		
+		// assume top aligned
+		if (tds_box_alignment_v == fa_center) _box_y -= floor(tds_box_height / 2);
+		if (tds_box_alignment_v == fa_bottom) _box_y -= tds_box_height;
 		
 		return tds_box_options.option_list_get_option_at_xy(_box_x, _box_y, _x, _y);
 	}
@@ -144,7 +157,12 @@ function TDS_Box(width, height) constructor {
 		var _alpha = (argument_count > 0) ? argument[0] : 1;
 		
 		// assume left aligned
-		// TODO modify x/y for other alignments here
+		if (tds_box_alignment_h == fa_center) _x -= floor(tds_box_width / 2);
+		if (tds_box_alignment_h == fa_right) _x -= tds_box_width;
+		
+		// assume top aligned
+		if (tds_box_alignment_v == fa_center) _y -= floor(tds_box_height / 2);
+		if (tds_box_alignment_v == fa_bottom) _y -= tds_box_height;
 		
 		// box includes width of border
 		draw_set_alpha(_alpha);

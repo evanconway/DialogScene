@@ -16,7 +16,7 @@ if (keyboard_check_pressed(ord("2"))) {
 }
 
 if (keyboard_check_pressed(ord("3"))) {
-	box.tds_box_set_data("Maybe not.", 2, s_character);
+	box.tds_box_set_data("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.", 2, undefined);
 }
 
 if (keyboard_check_pressed(ord("4"))) {
@@ -36,6 +36,8 @@ var mouse = { x: device_mouse_x_to_gui(0), y: device_mouse_y_to_gui(0) };
 if (keyboard_check_pressed(vk_up)) box.tds_box_option_set_highlight_prev();
 if (keyboard_check_pressed(vk_down)) box.tds_box_option_set_highlight_next();
 
-//box.tds_box_option_set_highlight_at_xy(100, 100, mouse.x, mouse.y);
+var draw = { x: 100, y: 100 };
 
-box.tds_box_draw(100, 100);
+box.tds_box_option_set_highlight_at_xy(draw.x, draw.y, mouse.x, mouse.y);
+
+box.tds_box_draw(draw.x, draw.y);
