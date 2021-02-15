@@ -41,7 +41,7 @@ function Game_Tree() constructor{
 	
 		if (create_new_branch) branch++;
 		
-		var step = { branch: branch, branch_depth: branch_depth, data: _data, targets: [] }; // the branch id could be WRONG if new branch wasn't created
+		var step = { branch: branch, branch_depth: branch_depth, data: _data, targets: [], links: [] }; // the branch id could be WRONG if new branch wasn't created
 		var step_prev = array_length(tree) > 0 ? tree[array_length(tree) - 1] : undefined;
 		
 		// correct step branch id
@@ -106,6 +106,12 @@ function Game_Tree() constructor{
 		create_new_branch = false
 	}
 	
+	/// @func tree_add_link(scene)
+	tree_add_link = function(_scene) {
+		var _last_state = tree[array_length(tree) - 1];
+		array_push(_last_state.links, _scene);
+	}
+	
 	/// @desc Set state to next target. 0 assumed if none given.
 	/// @func tree_advance(*target)
 	tree_advance = function() {
@@ -121,8 +127,14 @@ function Game_Tree() constructor{
 		return tree[state].data;
 	}
 	
+	/// @func tree_get_links()
+	tree_get_links = function() {
+		return tree[state].links;
+	}
+	
 	/// @func tree_at_end()
 	tree_at_end = function() {
-		return (state == (array_length(tree) - 1));
+		var _targets = tree[state].targets;
+		return (array_length(_targets) <= 0);
 	}
 }

@@ -4,12 +4,20 @@
 var mouse = { x: device_mouse_x_to_gui(0), y: device_mouse_y_to_gui(0) };
 var draw = { x: 100, y: 100 };
 
-var _option = scene.tds_scene_get_option_at_xy(draw.x, draw.y, mouse.x, mouse.y);
-scene.tds_scene_option_set_highlight(_option);
+var _option = current.tds_scene_get_option_at_xy(draw.x, draw.y, mouse.x, mouse.y);
+current.tds_scene_option_set_highlight(_option);
 
 if (mouse_check_button_pressed(mb_left)) {
 	if (_option < 0) _option = 0;
-	scene.tds_scene_advance(_option);
+	
+	if (!current.tds_scene_finished()) {
+		current.tds_scene_advance(_option);
+	} else {
+		var _links = current.tds_get_links();
+		if (array_length(_links) > 0) {
+			current = _links[_option]; // set to option to allow linking from options
+		}
+	}
 }
 
-scene.tds_scene_draw(draw.x, draw.y);
+current.tds_scene_draw(draw.x, draw.y);

@@ -1,5 +1,4 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+
 function TDS_Scene(box_width, box_height) constructor {
 	tds_box = new TDS_Box(box_width, box_height);
 	tds_scene_data = new Game_Tree();
@@ -20,8 +19,9 @@ function TDS_Scene(box_width, box_height) constructor {
 		
 		/* This is so ugly, but I'm not sure how else to do it. We've seen FriendlyCosmonaut do
 		something like this in their code. */
-		if (argument_count <= 3) tds_scene_data.add(_data, _original_caller);
-		// observe: since options are linked to branches, there should never be a call with 4 arguments
+		
+		// Check for argument count 4 because we could have a state with options but no branches. Useful for linking.
+		if (argument_count <= 4) tds_scene_data.add(_data, _original_caller);
 		if (argument_count == 5) tds_scene_data.add(_data, _original_caller, argument[4]);
 		if (argument_count == 6) tds_scene_data.add(_data, _original_caller, argument[4], argument[5]);
 		if (argument_count == 7) tds_scene_data.add(_data, _original_caller, argument[4], argument[5], argument[6]);
@@ -30,6 +30,16 @@ function TDS_Scene(box_width, box_height) constructor {
 		if (argument_count == 10) tds_scene_data.add(_data, _original_caller, argument[4], argument[5], argument[6], argument[7], argument[8], argument[9]);
 		if (argument_count == 11) tds_scene_data.add(_data, _original_caller, argument[4], argument[5], argument[6], argument[7], argument[8], argument[9], argument[10]);
 		if (argument_count == 12) tds_scene_data.add(_data, _original_caller, argument[4], argument[5], argument[6], argument[7], argument[8], argument[9], argument[10], argument[11]);
+	}
+	
+	/// @func tds_add_link(scene)
+	tds_add_link = function(_scene) {
+		tds_scene_data.tree_add_link(_scene);
+	}
+	
+	/// @func tds_get_links()
+	tds_get_links = function() {
+		return tds_scene_data.tree_get_links();
 	}
 	
 	/// @func tds_scene_advance(*target_index)
