@@ -120,4 +120,9 @@ function Game_Tree() constructor{
 	tree_get_data = function() {
 		return tree[state].data;
 	}
+	
+	/// @func tree_at_end()
+	tree_at_end = function() {
+		return (state == (array_length(tree) - 1));
+	}
 }

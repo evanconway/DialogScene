@@ -26,7 +26,7 @@ scene.tds_add(circle, "Which option would you prefer?", 0, ["Good", "Bad"], func
 		});
 	}, function() {
 		scene.tds_add(square, "You should be ashamed of yourself.", 1);
-		scene.tds_add(square, "But, I admire you confidence.", 0);
+		scene.tds_add(square, "But, I admire your confidence.", 0);
 	});
 });
 scene.tds_add(circle, "Talk to you later!", 0);

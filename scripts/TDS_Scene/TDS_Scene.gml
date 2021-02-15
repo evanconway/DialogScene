@@ -47,9 +47,11 @@ function TDS_Scene(box_width, box_height) constructor {
 		if (_textbox == undefined) return;
 		
 		if (_textbox.get_typing_all_finished()) {
-			tds_scene_data.tree_advance(_index);
-			var _data = tds_scene_data.tree_get_data();
-			tds_box.tds_box_set_data(_data.text, _data.portrait_index, _data.character.portrait, _data.character.default_effects, _data.options);
+			if (!tds_scene_data.tree_at_end()) {
+				tds_scene_data.tree_advance(_index);
+				var _data = tds_scene_data.tree_get_data();
+				tds_box.tds_box_set_data(_data.text, _data.portrait_index, _data.character.portrait, _data.character.default_effects, _data.options);
+			}
 		} else {
 			_textbox.advance();
 		}
@@ -69,5 +71,10 @@ function TDS_Scene(box_width, box_height) constructor {
 	tds_scene_draw = function(_x, _y) {
 		var _alpha = (argument_count > 2) ? argument[2] : 1;
 		tds_box.tds_box_draw(_x, _y, _alpha);
+	}
+	
+	/// @func tds_scene_finished()
+	tds_scene_finished = function() {
+		return (tds_box.tds_box_jtt.get_typing_all_finished() && tds_scene_data.tree_at_end())
 	}
 }
