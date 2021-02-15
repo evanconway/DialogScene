@@ -24,15 +24,20 @@ function Game_Tree() constructor{
 	branch_depth = 0; // depth of each step, creation only
 	create_new_branch = true; // flag for creating new branch, creation only
 	
-	/// @func add(data, *branches...)
-	add = function(_data) {
+	/// @func add(data, caller_id, *branches...)
+	add = function(_data, _caller_id) {
 		
-		/*
-		The optional *branches... parameter is for functions that also populate the tree.
+		/* When trying to add multiple branches to the tree, we found things fell apart if we
+		didn't have a reference to the original calling instance. If there is data in the original
+		calling instance that isn't primitive, the tree will have no way of referencing it when
+		running branch functions, because it will be out of scope. By insiting we give this 
+		function a reference to the original calling instance, we can be sure the branch
+		functions have access to any data in-scope there. */
+		
+		/* The optional *branches... parameter is for functions that also populate the tree.
 		They are executed as sub trees of the current tree. The add function is designed
 		this way so the code visually looks like the tree as you're making it. This makes
-		it easier to make changes right in game maker on the fly. 
-		*/
+		it easier to make changes right in game maker on the fly. */
 	
 		if (create_new_branch) branch++;
 		
@@ -70,8 +75,8 @@ function Game_Tree() constructor{
 			array_push(tree[last_high_depth].targets, curr_step_id);
 		}
 		
-		// If the previous step's depth is one lower than current (and current is not a new branch), add current index as target for steps with empty target arrays between current, and last step in current depth.
-		if (step_prev.branch_depth == branch_depth + 1 && !create_new_branch) {
+		// If the previous step's depth is at least one lower than current (and current is not a new branch), add current index as target for steps with empty target arrays between current, and last step in current depth.
+		if (step_prev.branch_depth >= branch_depth + 1 && !create_new_branch) {
 			// find last step with same depth as current
 			var i_backwards = curr_step_id - 1;
 			while (tree[i_backwards].branch_depth != branch_depth) {
@@ -84,10 +89,16 @@ function Game_Tree() constructor{
 		
 		// execute branch functions
 		var branch_original_depth = branch_depth;
-		for (var i = 1; i < argument_count; i++) {
+		for (var i = 2; i < argument_count; i++) {
 			branch_depth = branch_original_depth + 1;
 			create_new_branch = true;
-			method(undefined, argument[i])();
+			
+			/* This may require much further testing, but the other call appears to be required. When
+			calling the add function from anything, we lose scope of data as we make further and 
+			further branches. Using other stops this, but I haven't quite wrapped my head around
+			why. */
+
+			method(_caller_id, argument[i])();
 		}
 		branch_depth = branch_original_depth;
 		
