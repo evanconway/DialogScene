@@ -5,7 +5,7 @@ scene2 = new TDS_Scene(800, 600);
 
 circle = new TDS_Character(s_character, "font:f_jtt_default chirp:snd_chirp2");
 square = new TDS_Character(s_character2, "font:f_handwriting chirp:snd_textbox_default");
-	
+
 scene.tds_add(circle, "Hello there!", 0);
 scene.tds_add(square, "This is the intro", 1);
 scene.tds_add(circle, "Which option would you prefer?", 0, ["Good", "Bad"], function() {
@@ -39,12 +39,11 @@ scene.tds_scene_advance(); // must call advance after adding data to set first s
 
 scene2.tds_add(square, "Woah... did we just change scenes?", 1);
 scene2.tds_add(circle, "I think we did, how about that. What happens now?", 1);
-scene2.tds_add(square, "Don't keep up is the dark, what's the next move?", 2, ["Make a game", "Build more tools"], function() {
+scene2.tds_add(square, "Don't keep us in the dark, what's the next move?", 2, ["Make a game", "Build more tools"], function() {
 	scene2.tds_add(circle, "Awesome, I've been looking forward to this", 0);
 }, function() {
 	scene2.tds_add(square, "Good idea, we need more flexibility.", 0);
 });
-
+scene2.tds_add(circle, "Press R to restart", 0);
 scene2.tds_scene_advance(); // must call advance after adding data to set first state
-
 current = scene;
